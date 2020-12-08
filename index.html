@@ -71,8 +71,8 @@
     const createTbody = (array) => array.map((x, i) => `<tr>${createTd(x, i).join('')}</tr>`);
 
     // 画面に描画する
-    const showTbody = (tags) => {
-      document.getElementById('tbody').innerHTML = tags;
+    const showTbody = (targetId, tags) => {
+      document.getElementById(targetId).innerHTML = tags;
     };
 
     // 指定要素のid取得
@@ -85,7 +85,7 @@
     const updateResule = (resultArray, targetIndexArray) => {
       const newResultArray = [...resultArray];
       newResultArray[targetIndexArray[0]][targetIndexArray[1]] =
-        newResultArray[targetIndexArray[0]][targetIndexArray[1]] === true
+        !!newResultArray[targetIndexArray[0]][targetIndexArray[1]]
           ? false
           : true;
       resultArray = newResultArray;
@@ -124,26 +124,28 @@
 
     // チェックする配列を入力してリーチならtrue
     const isReach = (allCheckArray) => {
-      const checkedArray = allCheckArray.map((x) => x.filter((x) => x !== false));
-      const checkedResult = checkedArray.filter((x) => x.length === 4).length === 0
-        ? false
-        : true;
+      const checkedArray = allCheckArray.map((x) => x.filter((x) => !!x));
+      const checkedResult =
+        !checkedArray.filter((x) => x.length === 4).length
+          ? false
+          : true;
       return checkedResult;
     };
 
     // チェックする配列を入力してビンゴならtrue
     const isBingo = (allCheckArray) => {
-      const checkedArray = allCheckArray.map((x) => x.filter((x) => x !== false));
-      const checkedResult = checkedArray.filter((x) => x.length === 5).length === 0
-        ? false
-        : true;
+      const checkedArray = allCheckArray.map((x) => x.filter((x) => !!x));
+      const checkedResult =
+        !checkedArray.filter((x) => x.length === 5).length
+          ? false
+          : true;
       return checkedResult;
     };
 
     // 画面に表示される2次元配列表の更新と更新時のクリックイベント登録
     const updateGame = () => {
       // 表示を更新
-      showTbody(createTbody(data).join(''));
+      showTbody('tbody', createTbody(data).join(''));
       // クリックイベント登録
       [...document.getElementsByTagName('td')].forEach(elm => {
         elm.addEventListener('click', (e) => {
