@@ -125,21 +125,17 @@
     // チェックする配列を入力してリーチならtrue
     const isReach = (allCheckArray) => {
       const checkedArray = allCheckArray.map((x) => x.filter((x) => !!x));
-      const checkedResult =
-        !checkedArray.filter((x) => x.length === 4).length
-          ? false
-          : true;
-      return checkedResult;
+      return !checkedArray.filter((x) => x.length === 4).length
+        ? false
+        : true;
     };
 
     // チェックする配列を入力してビンゴならtrue
     const isBingo = (allCheckArray) => {
       const checkedArray = allCheckArray.map((x) => x.filter((x) => !!x));
-      const checkedResult =
-        !checkedArray.filter((x) => x.length === 5).length
-          ? false
-          : true;
-      return checkedResult;
+      return !checkedArray.filter((x) => x.length === 5).length
+        ? false
+        : true;
     };
 
     // 画面に表示される2次元配列表の更新と更新時のクリックイベント登録
@@ -147,13 +143,17 @@
       // 表示を更新
       showTbody('tbody', createTbody(data).join(''));
       // クリックイベント登録
-      [...document.getElementsByTagName('td')].forEach(elm => {
-        elm.addEventListener('click', (e) => {
+      [...document.getElementsByTagName('td')].forEach(x => {
+        x.addEventListener('click', (e) => {
           // 結果表を更新
           updateResule(result, getNumberFromId(getId(e)));
           // リーチかビンゴならアラート
-          if (isReach(getAllCheckArray(result))) alert('reach!!!');
-          if (isBingo(getAllCheckArray(result))) alert('bingo!!!');
+          const gameResult =
+            isBingo(getAllCheckArray(result))
+              ? alert('Bingo!!!')
+              : isReach(getAllCheckArray(result))
+                ? alert('Reach!!!')
+                : false;
           updateGame();
         })
       });
