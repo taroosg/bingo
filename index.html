@@ -95,7 +95,7 @@
     const getRowArray = (array, rowNumber) => array[rowNumber];
 
     // 2次元配列から列番号を指定して列のみの配列を作成
-    const getColumnArray = (array, columnNumber) => array.map((x, i) => x.find((x, i) => i === columnNumber));
+    const getColumnArray = (array, columnNumber) => array.map((x) => x[columnNumber]);
 
     // 2次元配列から斜めの配列を作成
     const getCrossArray = (array) => {
