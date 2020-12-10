@@ -82,7 +82,7 @@
     const getNumberFromId = (id) => id.split('_').map(Number);
 
     // 指定インデックスのfalseとtrueを更新する
-    const updateResule = (resultArray, targetIndexArray) => {
+    const updateResult = (resultArray, targetIndexArray) => {
       const newResultArray = [...resultArray];
       newResultArray[targetIndexArray[0]][targetIndexArray[1]] =
         !!newResultArray[targetIndexArray[0]][targetIndexArray[1]]
@@ -142,7 +142,7 @@
       [...document.getElementsByTagName('td')].forEach(x => {
         x.addEventListener('click', (e) => {
           // 結果表を更新
-          updateResule(result, getNumberFromId(getId(e)));
+          updateResult(result, getNumberFromId(getId(e)));
           // リーチかビンゴならアラート
           const gameResult =
             isBingo(getAllCheckArray(result))
