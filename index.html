@@ -119,18 +119,11 @@
       ];
     };
 
-    // チェックする配列を入力してリーチならtrue
-    const isReach = (allCheckArray) => {
+    // 指定した数のマスが揃っていればtrue
+    const isAvailableNumber = (allCheckArray, number) => {
       return allCheckArray
         .map((x) => x.filter(Boolean))
-        .some((x) => x.length === 4);
-    };
-
-    // チェックする配列を入力してビンゴならtrue
-    const isBingo = (allCheckArray) => {
-      return allCheckArray
-        .map((x) => x.filter(Boolean))
-        .some((x) => x.length === 5);
+        .some((x) => x.length === number);
     };
 
     // 画面に表示される2次元配列表の更新と更新時のクリックイベント登録
@@ -144,9 +137,9 @@
           result = updateResult(result, getIndexFromId(getId(e)));
           // リーチかビンゴならアラート
           const gameResult =
-            isBingo(getAllCheckArray(result))
+            isAvailableNumber(getAllCheckArray(result), 5)
               ? alert('Bingo!!!')
-              : isReach(getAllCheckArray(result))
+              : isAvailableNumber(getAllCheckArray(result), 4)
                 ? alert('Reach!!!')
                 : false;
           updateGame();
