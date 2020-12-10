@@ -125,17 +125,13 @@
     // チェックする配列を入力してリーチならtrue
     const isReach = (allCheckArray) => {
       const checkedArray = allCheckArray.map((x) => x.filter((x) => !!x));
-      return !checkedArray.filter((x) => x.length === 4).length
-        ? false
-        : true;
+      return checkedArray.some((x) => x.length === 4)
     };
 
     // チェックする配列を入力してビンゴならtrue
     const isBingo = (allCheckArray) => {
       const checkedArray = allCheckArray.map((x) => x.filter((x) => !!x));
-      return !checkedArray.filter((x) => x.length === 5).length
-        ? false
-        : true;
+      return checkedArray.some((x) => x.length === 5)
     };
 
     // 画面に表示される2次元配列表の更新と更新時のクリックイベント登録
