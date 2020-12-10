@@ -79,15 +79,12 @@
     const getId = (e) => e.target.id;
 
     // 0_0形式のidを数値の配列にする
-    const getNumberFromId = (id) => id.split('_').map(Number);
+    const getIndexFromId = (id) => id.split('_').map(Number);
 
     // 指定インデックスのfalseとtrueを更新する
     const updateResult = (resultArray, targetIndexArray) => {
       const newResultArray = [...resultArray];
-      newResultArray[targetIndexArray[0]][targetIndexArray[1]] =
-        !!newResultArray[targetIndexArray[0]][targetIndexArray[1]]
-          ? false
-          : true;
+      newResultArray[targetIndexArray[0]][targetIndexArray[1]] = !newResultArray[targetIndexArray[0]][targetIndexArray[1]]
       return newResultArray;
     }
 
@@ -144,7 +141,7 @@
       [...document.getElementsByTagName('td')].forEach((x) => {
         x.addEventListener('click', (e) => {
           // 結果表を更新
-          result = updateResult(result, getNumberFromId(getId(e)));
+          result = updateResult(result, getIndexFromId(getId(e)));
           // リーチかビンゴならアラート
           const gameResult =
             isBingo(getAllCheckArray(result))
