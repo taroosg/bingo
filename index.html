@@ -125,14 +125,14 @@
     // チェックする配列を入力してリーチならtrue
     const isReach = (allCheckArray) => {
       return allCheckArray
-        .map((x) => x.filter((x) => !!x))
+        .map((x) => x.filter(Boolean))
         .some((x) => x.length === 4);
     };
 
     // チェックする配列を入力してビンゴならtrue
     const isBingo = (allCheckArray) => {
       return allCheckArray
-        .map((x) => x.filter((x) => !!x))
+        .map((x) => x.filter(Boolean))
         .some((x) => x.length === 5);
     };
 
@@ -141,7 +141,7 @@
       // 表示を更新
       showTbody('tbody', createTbody(data).join(''));
       // クリックイベント登録
-      [...document.getElementsByTagName('td')].forEach(x => {
+      [...document.getElementsByTagName('td')].forEach((x) => {
         x.addEventListener('click', (e) => {
           // 結果表を更新
           result = updateResult(result, getNumberFromId(getId(e)));
