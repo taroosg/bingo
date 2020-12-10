@@ -60,7 +60,7 @@
     const data = arrayChunk(shuffledArray, 5).filter((x, i) => i < 5);
 
     // 結果表
-    const result = [...Array(5)].map(() => Array(5).fill(false));
+    let result = [...Array(5)].map(() => Array(5).fill(false));
 
     // 行のタグをつくる
     const createTd = (rowArray, rowIndex) => {
@@ -88,14 +88,14 @@
         !!newResultArray[targetIndexArray[0]][targetIndexArray[1]]
           ? false
           : true;
-      resultArray = newResultArray;
+      return newResultArray;
     }
 
     // 2次元配列から行番号を指定して行のみの配列を作成
     const getRowArray = (array, rowNumber) => array[rowNumber];
 
     // 2次元配列から列番号を指定して列のみの配列を作成
-    const getColumnArray = (array, columnNumber) => array.flatMap((x, i) => x.filter((x, i) => i == columnNumber));
+    const getColumnArray = (array, columnNumber) => array.map((x, i) => x.find((x, i) => i === columnNumber));
 
     // 2次元配列から斜めの配列を作成
     const getCrossArray = (array) => {
@@ -124,14 +124,16 @@
 
     // チェックする配列を入力してリーチならtrue
     const isReach = (allCheckArray) => {
-      const checkedArray = allCheckArray.map((x) => x.filter((x) => !!x));
-      return checkedArray.some((x) => x.length === 4)
+      return allCheckArray
+        .map((x) => x.filter((x) => !!x))
+        .some((x) => x.length === 4);
     };
 
     // チェックする配列を入力してビンゴならtrue
     const isBingo = (allCheckArray) => {
-      const checkedArray = allCheckArray.map((x) => x.filter((x) => !!x));
-      return checkedArray.some((x) => x.length === 5)
+      return allCheckArray
+        .map((x) => x.filter((x) => !!x))
+        .some((x) => x.length === 5);
     };
 
     // 画面に表示される2次元配列表の更新と更新時のクリックイベント登録
@@ -142,7 +144,7 @@
       [...document.getElementsByTagName('td')].forEach(x => {
         x.addEventListener('click', (e) => {
           // 結果表を更新
-          updateResult(result, getNumberFromId(getId(e)));
+          result = updateResult(result, getNumberFromId(getId(e)));
           // リーチかビンゴならアラート
           const gameResult =
             isBingo(getAllCheckArray(result))
